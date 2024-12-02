@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct WatchNIDemoApp: App {
+struct artcploggerApp: App {
     var body: some Scene {
         WindowGroup {
             Group {

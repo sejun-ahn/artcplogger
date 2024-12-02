@@ -4,11 +4,5 @@
 <dict>
 	<key>UIFileSharingEnabled</key>
 	<true/>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string></string>
-	<key>NSMotionUsageDescription</key>
-	<string></string>
 </dict>
 </plist>

@@ -260,6 +260,7 @@ class CoreMotionManager:NSObject, ObservableObject {
 
 func getTimestampSince1970() -> String {
     let currentTime = Date().timeIntervalSince1970
-    let currentTimeString = String(Int(currentTime*1000))
-    return currentTimeString
+    //let currentTimeString = String(Int(currentTime*1000))
+    //return currentTimeString
+    return String(currentTime)
 }

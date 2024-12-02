@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9B06F1BA2CCD3150001D4821 /* tcploggerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B06F1B92CCD3150001D4821 /* tcploggerApp.swift */; };
+		9B06F1BA2CCD3150001D4821 /* artcploggerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B06F1B92CCD3150001D4821 /* artcploggerApp.swift */; };
 		9B06F1BE2CCD3151001D4821 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B06F1BD2CCD3151001D4821 /* Assets.xcassets */; };
 		9B06F1C12CCD3151001D4821 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B06F1C02CCD3151001D4821 /* Preview Assets.xcassets */; };
 		9BC818FD2CD3D3640058ADAB /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC818FC2CD3D35D0058ADAB /* SocketManager.swift */; };
@@ -28,13 +28,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9B06F1B62CCD3150001D4821 /* artcplogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = artcplogger.app; path = "/Users/mpilmini/Desktop/artcplogger/build/Debug-iphoneos/artcplogger.app"; sourceTree = "<absolute>"; };
-		9B06F1B92CCD3150001D4821 /* tcploggerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tcploggerApp.swift; sourceTree = "<group>"; };
+		9B06F1B92CCD3150001D4821 /* artcploggerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = artcploggerApp.swift; sourceTree = "<group>"; };
 		9B06F1BD2CCD3151001D4821 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9B06F1C02CCD3151001D4821 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9B06F1C72CCD3192001D4821 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9B343AC52CD21C1D00E82F40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B4578CC2CFD627C009DC535 /* artcplogger.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = artcplogger.xcodeproj; sourceTree = SOURCE_ROOT; };
+		9B4578E82CFD86DB009DC535 /* artcplogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = artcplogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC818FC2CD3D35D0058ADAB /* SocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
 		9BC819102CD4D7480058ADAB /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,13 +62,14 @@
 				9B4578CC2CFD627C009DC535 /* artcplogger.xcodeproj */,
 				9B06F1C72CCD3192001D4821 /* README.md */,
 				9B06F1B82CCD3150001D4821 /* artcplogger */,
+				9B4578E82CFD86DB009DC535 /* artcplogger.app */,
 			);
 			sourceTree = "<group>";
 		};
 		9B06F1B82CCD3150001D4821 /* artcplogger */ = {
 			isa = PBXGroup;
 			children = (
-				9B06F1B92CCD3150001D4821 /* tcploggerApp.swift */,
+				9B06F1B92CCD3150001D4821 /* artcploggerApp.swift */,
 				9BC818FB2CD3CF850058ADAB /* View */,
 				9B1AFD5A2CD3A77900173E6F /* ARKitEncoder */,
 				9B343AC52CD21C1D00E82F40 /* Info.plist */,
@@ -87,6 +88,11 @@
 				9B06F1C02CCD3151001D4821 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9B4578E62CFD7040009DC535 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,7 +118,7 @@
 			);
 			name = artcplogger;
 			productName = tcplogger;
-			productReference = 9B06F1B62CCD3150001D4821 /* artcplogger.app */;
+			productReference = 9B4578E82CFD86DB009DC535 /* artcplogger.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -141,6 +147,12 @@
 			mainGroup = 9B06F1AD2CCD3150001D4821;
 			productRefGroup = 9B06F1AD2CCD3150001D4821;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9B4578E62CFD7040009DC535 /* Products */;
+					ProjectRef = 9B4578CC2CFD627C009DC535 /* artcplogger.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				9B06F1B52CCD3150001D4821 /* artcplogger */,
@@ -166,7 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BC818FD2CD3D3640058ADAB /* SocketManager.swift in Sources */,
-				9B06F1BA2CCD3150001D4821 /* tcploggerApp.swift in Sources */,
+				9B06F1BA2CCD3150001D4821 /* artcploggerApp.swift in Sources */,
 				9BC819112CD4D74D0058ADAB /* Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,12 +317,15 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = artcplogger/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSMotionUsageDescription = "";
 				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "\"Nearby Interaction Usage\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -336,12 +351,15 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = artcplogger/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSMotionUsageDescription = "";
 				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "\"Nearby Interaction Usage\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

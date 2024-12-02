@@ -109,6 +109,7 @@ class SocketManager: ObservableObject {
                     if let message = self.responseCaseManager?(self.receivedMessage) {
                         self.send(message)
                     }
+                    self.callAction(for: self.receivedMessage)
                 }
             }
             if isComplete {

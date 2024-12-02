@@ -93,6 +93,14 @@ struct SocketBoxView: View {
                 TextField("Text to send", text: $toSend)
                     .largeStyle()
                     .textFieldStyle(flag: !socketManager.isConnected)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            Spacer()
+                            Button("Done") {
+                                hideKeyboard()
+                            }
+                        }
+                    }
                 Button(action: {
                     SocketManager.shared.send(toSend)
                 }, label: {
@@ -108,5 +116,11 @@ struct SocketBoxView: View {
         .cornerRadius(6)
         .shadow(radius: 1)
         //.padding()
+    }
+}
+
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
