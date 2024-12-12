@@ -23,11 +23,11 @@ class ARKitManager: NSObject, ObservableObject, ARSessionDelegate {
         arView.debugOptions = [.showWorldOrigin, .showFeaturePoints]
     }
     
-    func startRecordingSession() {
+    func startRecordingSession(directoryName: String = "") {
         self.isRecording = true
         let configuration = ARWorldTrackingConfiguration()
         arView.session.run(configuration, options: [.resetTracking])
-        totalEncoder = TotalEncoder(arConfiguration: configuration)
+        totalEncoder = TotalEncoder(arConfiguration: configuration, directoryName: directoryName)
     }
     
     func stopRecordingSession() {

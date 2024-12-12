@@ -1,8 +1,6 @@
 //
-//  SwiftUIView.swift
-//  tcplogger
-//
-//  Created by mpilmini on 10/29/24.
+// Sejun Ahn
+// github: github.com/sejun-ahn
 //
 
 import SwiftUI
@@ -13,7 +11,6 @@ func getTimeString() -> String {
     formatter.dateFormat = "HH:mm:ss.SSS"
     return formatter.string(from: date)
 }
-
 
 struct SocketBoxView: View {
     @ObservedObject var socketManager: SocketManager
@@ -30,7 +27,6 @@ struct SocketBoxView: View {
                     TextField("Host", text: $hostText)
                         .mediumStyle()
                         .textFieldStyle(flag: socketManager.isConnected)
-                        
                 }
                 VStack(spacing: 5) {
                     Text("Port")
@@ -64,43 +60,38 @@ struct SocketBoxView: View {
             }
             
             HStack(spacing: 5) {
+                Text("Latency")
+                    .smallStyle()
+                Text(String(format: "%.1f ms", socketManager.pingPongLatency*1000))
+                    .smallStyleVal()
+                Text("Offset")
+                    .smallStyle()
+                Text(String(format: "%.1f ms", socketManager.pingPongOffset*1000))
+                    .smallStyleVal()
+            }
+            
+            HStack(spacing: 5) {
                 Text("Messages")
                     .mediumStyle()
-                Button(action: {
-                    print("Delay Check")
-                }, label: {
-                    Text("Delay Check")
-                })
-                .mediumStyle()
-                .buttonStyle(flag: socketManager.isConnected)
             }
-                VStack(spacing: 5) {
-                    ForEach(socketManager.messages, id: \.self) { message in
-                        Text(message)
-                            .padding(10)
-                            .frame(width: 335, height: 30, alignment: .leading)
-                            .background(Color.white)
-                            .cornerRadius(6)
-                    }
+            
+            VStack(spacing: 5) {
+                ForEach(socketManager.messages, id: \.self) { message in
+                    Text(message)
+                        .padding(10)
+                        .frame(width: 335, height: 30, alignment: .leading)
+                        .background(Color.white)
+                        .cornerRadius(6)
                 }
-                .frame(width: 345, height: 110)
-                .background(Color.gray)
-                .cornerRadius(6)
-                
-                
-    
+            }
+            .frame(width: 345, height: 110)
+            .background(Color.gray)
+            .cornerRadius(6)
+
             HStack(spacing: 5) {
                 TextField("Text to send", text: $toSend)
                     .largeStyle()
                     .textFieldStyle(flag: !socketManager.isConnected)
-                    .toolbar {
-                        ToolbarItemGroup(placement: .keyboard) {
-                            Spacer()
-                            Button("Done") {
-                                hideKeyboard()
-                            }
-                        }
-                    }
                 Button(action: {
                     SocketManager.shared.send(toSend)
                 }, label: {
@@ -110,17 +101,18 @@ struct SocketBoxView: View {
                 .buttonStyle(flag: socketManager.isConnected)
             }
         }
-        //.padding(20)
-        .frame(width: 345, height: 260, alignment: .center)
+        .frame(width: 345, height: 295, alignment: .center)
         .background(Color.gray.opacity(0.2))
         .cornerRadius(6)
         .shadow(radius: 1)
-        //.padding()
+        .gesture(DragGesture().onChanged { _ in
+            UIApplication.shared.dismissKeyboard()}
+        )
     }
 }
 
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+extension UIApplication {
+    func dismissKeyboard() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

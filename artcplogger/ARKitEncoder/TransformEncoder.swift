@@ -16,12 +16,12 @@ class TransformEncoder {
             preconditionFailure("Can't open transform file for writing.")
         }
     }
-    func add(frame: ARFrame, currentFrame: Int) {
+    func add(frame: ARFrame, currentFrame: Int, timestamp: Double) {
         let transform = frame.camera.transform
         let t = transform[3]
         let q = simd_quatf(transform).vector
         let frameNumber = String(format: "%06d", currentFrame)
-        let line = "\(frame.timestamp),\(frameNumber),\(t.x),\(t.y),\(t.z),\(q.x),\(q.y),\(q.z),\(q.w)\n"
+        let line = "\(timestamp),\(frameNumber),\(t.x),\(t.y),\(t.z),\(q.x),\(q.y),\(q.z),\(q.w)\n"
         self.fileHandle.write(line.data(using: .utf8)!)
     }
     func done() {

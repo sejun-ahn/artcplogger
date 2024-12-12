@@ -1,3 +1,8 @@
+//
+// Sejun Ahn
+// github: github.com/sejun-ahn
+//
+
 import Foundation
 import SwiftUI
 
@@ -5,6 +10,13 @@ extension View {
     func smallStyle() -> some View {
         return self
             .frame(width: 80, height: 30, alignment: .center)
+            .cornerRadius(6)
+    }
+    
+    func smallStyleVal() -> some View {
+        return self
+            .frame(width: 80, height: 30, alignment: .center)
+            .background(.white)
             .cornerRadius(6)
     }
     

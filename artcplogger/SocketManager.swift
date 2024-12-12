@@ -1,16 +1,28 @@
+//
+// Sejun Ahn
+// github: github.com/sejun-ahn
+//
+
 import Foundation
 import Network
 
 class SocketManager: ObservableObject {
     static let shared = SocketManager()
+    
     private let hostKey = "SocketHostKey"
     private let portKey = "SocketPortKey"
     private var connection: NWConnection?
     private var receivedMessage: String = ""
-    private var actionCaseManager: [String: ()->Void] = [:]
+    private var actionCaseManager: [String: (String)->Void] = [:]
+    private var txPing: Double = 0.0
+    private var txPong: Double = 0.0
+    private var rxPong: Double = 0.0
     @Published var messages: [String] = ["", "", ""]
     @Published var isConnected: Bool = false
     @Published var pingPong: Bool = false
+    @Published var pingPongOffset: Double = 0.0
+    @Published var pingPongLatency: Double = 0.0
+        
     var responseCaseManager: ((String) -> String)?
     
     private var heartbeatTimer: Timer?
@@ -100,16 +112,21 @@ class SocketManager: ObservableObject {
             if let data = data, !data.isEmpty {
                 DispatchQueue.main.async {
                     self.receivedMessage = String(data: data, encoding: .utf8) ?? ""
-                    print("[RX]\(getTimeString()) \(self.receivedMessage)")
-                    if self.receivedMessage != "pong" {
-                        self.updateMessages(with: "[RX]\(getTimeString()) \(self.receivedMessage)")
-                    } else {
-                        self.pingPong.toggle()
+                    if let parsedMessage = parseMessage(self.receivedMessage) {
+                        print(parsedMessage.flag, parsedMessage.message)
+                        if parsedMessage.flag == "pong" {
+                            self.updateMessages(with: "[RX]\(getTimeString()) pong \(convertTimeString(date: parsedMessage.message))")
+                            self.txPong = convertTimeDouble(date: parsedMessage.message)
+                            self.rxPong = Date().timeIntervalSince1970
+                            self.pingPongOffset = (self.rxPong + self.txPing)/2 - self.txPong
+                            self.pingPongLatency = (self.rxPong - self.txPing)/2
+                            self.pingPong.toggle()
+                        }
+                        if let responseMessage = self.responseCaseManager?(parsedMessage.flag) {
+                            self.send(responseMessage)
+                        }
+                        self.callAction(for: self.receivedMessage)
                     }
-                    if let message = self.responseCaseManager?(self.receivedMessage) {
-                        self.send(message)
-                    }
-                    self.callAction(for: self.receivedMessage)
                 }
             }
             if isComplete {
@@ -140,6 +157,7 @@ class SocketManager: ObservableObject {
         DispatchQueue.main.async {
             self.heartbeatTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true, block: { _ in
                 self.send("ping")
+                self.txPing = Date().timeIntervalSince1970
             })
         }
     }
@@ -149,19 +167,44 @@ class SocketManager: ObservableObject {
         heartbeatTimer = nil
     }
     
-    private func sendHeartbeat() {
-        let ping = "ping"
-        send(ping)
+    func addAction(for flag: String, action: @escaping (String) -> Void) {
+        actionCaseManager[flag] = action
     }
     
-    func addAction(for message: String, action: @escaping () -> Void) {
-        actionCaseManager[message] = action
-    }
     func callAction(for message: String) {
-        if let action = actionCaseManager[message] {
-            action()
-        } else {
-            print("Action for message \(message) not found")
+        if let parsedMessage = parseMessage(message) {
+            if let action = actionCaseManager[parsedMessage.flag] {
+                action(parsedMessage.message)
+            } else {
+                print("Action for flag \(parsedMessage.flag) not found")
+            }
         }
     }
+}
+
+func convertTimeString(date: String) -> String {
+    guard let dateDouble = Double(date) else { return "" }
+    let formatter = DateFormatter()
+    let date = Date(timeIntervalSince1970: dateDouble)
+    formatter.dateFormat = "HH:mm:ss.SSS"
+    return formatter.string(from: date)
+}
+
+func convertTimeString2(date: String) -> String {
+    guard let dateDouble = Double(date) else { return "" }
+    let formatter = DateFormatter()
+    let date = Date(timeIntervalSince1970: dateDouble)
+    formatter.dateFormat = "yyMMdd_HHmmss"
+    return formatter.string(from: date)
+}
+
+func convertTimeDouble(date: String) -> Double {
+    guard let dateDouble = Double(date) else { return 0.0 }
+    return dateDouble
+}
+
+func parseMessage(_ message: String) -> (flag: String, message: String)? {
+    let parts = message.components(separatedBy: ";")
+    guard parts.count == 2 else { return nil }
+    return (flag: parts[0], message: parts[1])
 }

@@ -61,6 +61,8 @@ class CoreMotionManager:NSObject, ObservableObject {
     private var updateCount = 0
     private var coremotionQueue = OperationQueue()
     
+    private var directoryURL: URL? = nil
+    
     override init() {
         super.init()
         coreMotion1 = CMMotionManager()
@@ -122,12 +124,16 @@ class CoreMotionManager:NSObject, ObservableObject {
         self.isStarted = false
     }
     
-    func startRecording() {
+    func startRecording(directoryName: String? = nil) {
         if self.isStarted {
             self.isRecording = true
-            let directoryName = createDirectoryName()
-            let directoryURL = getDirectoryURL(directoryName: directoryName)
-            self.coremotionEncoder = CoreMotionEncoder(url: directoryURL)
+            if let directoryName = directoryName {
+                directoryURL = getDirectoryURL(directoryName: directoryName)
+            } else {
+                let directoryName = createDirectoryName()
+                directoryURL = getDirectoryURL(directoryName: directoryName)
+            }
+            self.coremotionEncoder = CoreMotionEncoder(url: directoryURL!)
         }
     }
     
@@ -260,7 +266,5 @@ class CoreMotionManager:NSObject, ObservableObject {
 
 func getTimestampSince1970() -> String {
     let currentTime = Date().timeIntervalSince1970
-    //let currentTimeString = String(Int(currentTime*1000))
-    //return currentTimeString
     return String(currentTime)
 }

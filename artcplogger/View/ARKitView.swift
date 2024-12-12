@@ -1,8 +1,6 @@
 //
-//  ARKitView.swift
-//  tcplogger
-//
-//  Created by mpilmini on 10/30/24.
+// Sejun Ahn
+// github: github.com/sejun-ahn
 //
 
 import SwiftUI
@@ -29,15 +27,15 @@ struct ARKitView: View {
                 SocketBoxView(socketManager: socketManager)
             }
             .onAppear(perform: {
-                SocketManager.shared.addAction(for: "a", action: {
+                SocketManager.shared.addAction(for: "a", action: { content in
                     if !arkitManager.isRecording {
-                        arkitManager.startRecordingSession()
+                        arkitManager.startRecordingSession(directoryName: convertTimeString2(date: content))
                     }
                     if coremotionManager.isStarted && !coremotionManager.isRecording {
-                        coremotionManager.startRecording()
+                        coremotionManager.startRecording(directoryName: convertTimeString2(date: content))
                     }
                 })
-                SocketManager.shared.addAction(for: "b", action: {
+                SocketManager.shared.addAction(for: "b", action: { content in 
                     if arkitManager.isRecording {
                         arkitManager.stopRecordingSession()
                     }

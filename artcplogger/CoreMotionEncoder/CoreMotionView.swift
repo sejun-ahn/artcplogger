@@ -1,8 +1,6 @@
 //
-//  CoreMotionView.swift
-//  tcplogger
-//
-//  Created by mpilmini on 11/2/24.
+// Sejun Ahn
+// github: github.com/sejun-ahn
 //
 
 import SwiftUI

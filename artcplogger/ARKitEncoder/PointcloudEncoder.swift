@@ -19,7 +19,8 @@ class PointCloudEncoder {
             preconditionFailure("Can't open pointcloud file for writing.")
         }
     }
-    func add(frame: ARFrame, currentFrame: Int) {
+    
+    func add(frame: ARFrame, currentFrame: Int, timestamp: Double) {
         self.lastFrame = frame
         let frameNumber = String(format: "%06d", currentFrame)
         if let points = frame.rawFeaturePoints?.points {
@@ -27,7 +28,7 @@ class PointCloudEncoder {
                 let x = points[index].x
                 let y = points[index].y
                 let z = points[index].z
-                let line = "\(frame.timestamp),\(frameNumber),\(x),\(y),\(z)\n"
+                let line = "\(timestamp),\(frameNumber),\(x),\(y),\(z)\n"
                 self.fileHandle.write(line.data(using: .utf8)!)
             }
         }

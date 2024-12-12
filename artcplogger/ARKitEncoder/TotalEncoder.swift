@@ -2,6 +2,8 @@ import Foundation
 import ARKit
 
 class TotalEncoder {
+    private let directoryURL: URL
+    
     private let rgbvideoEncoder: RGBVideoEncoder
     private let transformEncoder: TransformEncoder
     private let pointcloudEncoder: PointCloudEncoder
@@ -13,15 +15,19 @@ class TotalEncoder {
     private var savedFrames: Int = 0
     private let frameInterval: Int
     
-    init(arConfiguration: ARWorldTrackingConfiguration, fpsDivider: Int = 1) {
+    init(arConfiguration: ARWorldTrackingConfiguration, fpsDivider: Int = 1, directoryName: String? = nil) {
         self.frameInterval = fpsDivider
         self.totalQueue = DispatchQueue(label: "com.sejunahn.totalQueue")
         
         let width = arConfiguration.videoFormat.imageResolution.width
         let height = arConfiguration.videoFormat.imageResolution.height
         
-        let directoryName = createDirectoryName()
-        let directoryURL = getDirectoryURL(directoryName: directoryName)
+        if let directoryName = directoryName {
+            directoryURL = getDirectoryURL(directoryName: directoryName)
+        }
+        else {
+            directoryURL = getDirectoryURL(directoryName: "")
+        }
         
         self.rgbvideoEncoder = RGBVideoEncoder(url: directoryURL ,width: width, height: height)
         self.transformEncoder = TransformEncoder(url: directoryURL)
@@ -35,12 +41,12 @@ class TotalEncoder {
         if (currentFrame % frameInterval != 0) {
             return
         }
-        
+        let timestamp = Double(Date().timeIntervalSince1970)
         dispatchGroup.enter()
         totalQueue.async {
             self.rgbvideoEncoder.add(frame: VideoEncoderInput(buffer: frame.capturedImage, time: frame.timestamp), currentFrame: totalFrames)
-            self.transformEncoder.add(frame: frame, currentFrame: frameNumber)
-            self.pointcloudEncoder.add(frame: frame, currentFrame: frameNumber)
+            self.transformEncoder.add(frame: frame, currentFrame: frameNumber, timestamp: timestamp)
+            self.pointcloudEncoder.add(frame: frame, currentFrame: frameNumber, timestamp: timestamp)
             self.dispatchGroup.leave()
         }
         savedFrames += 1
